@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">findwifi</string>
+    <string name="title_activity_target_wifi_list">TargetWifiListActivity</string>
 </resources>
