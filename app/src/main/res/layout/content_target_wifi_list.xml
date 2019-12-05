@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".TargetWifiListActivity"
+    tools:context=".ui.TargetWifiListActivity"
     tools:showIn="@layout/activity_target_wifi_list">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

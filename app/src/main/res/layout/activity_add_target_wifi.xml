@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".AddTargetWifiActivity">
+    tools:context=".ui.AddTargetWifiActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -21,12 +21,14 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="input wifi mac" />
+        android:hint="@string/hint_input_mac" />
 
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="20dp"
-        android:text="保存" />
+        android:text="@string/save" />
 </LinearLayout>

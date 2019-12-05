@@ -15,14 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AddTargetWifiActivity"
+            android:name=".ui.AddTargetWifiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TargetWifiListActivity"
+            android:name=".ui.TargetWifiListActivity"
             android:label="@string/title_activity_target_wifi_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

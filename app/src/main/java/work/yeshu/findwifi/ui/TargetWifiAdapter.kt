@@ -1,10 +1,11 @@
-package work.yeshu.findwifi
+package work.yeshu.findwifi.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_wifi.view.tv_mac
+import work.yeshu.findwifi.R
 import work.yeshu.findwifi.db.TargetWifi
 
 class TargetWifiAdapter : RecyclerView.Adapter<TargetWifiAdapter.ViewHolder>() {

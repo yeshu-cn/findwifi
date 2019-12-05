@@ -1,4 +1,4 @@
-package work.yeshu.findwifi
+package work.yeshu.findwifi.ui
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_wifi.view.tv_mac
 import kotlinx.android.synthetic.main.item_wifi.view.tv_name
 import kotlinx.android.synthetic.main.item_wifi.view.tv_rssi
+import work.yeshu.findwifi.R
 
 class WifiAdapter : RecyclerView.Adapter<WifiAdapter.ViewHolder>() {
     var data: List<WifiItem> = emptyList()

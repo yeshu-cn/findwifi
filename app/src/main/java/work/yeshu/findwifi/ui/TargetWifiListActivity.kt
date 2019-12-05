@@ -1,4 +1,4 @@
-package work.yeshu.findwifi
+package work.yeshu.findwifi.ui
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.fab
 import kotlinx.android.synthetic.main.activity_main.recycler_view
 import kotlinx.android.synthetic.main.activity_target_wifi_list.toolbar
+import work.yeshu.findwifi.R
 import work.yeshu.findwifi.db.TargetWifi
 
 
@@ -25,8 +26,8 @@ class TargetWifiListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_target_wifi_list)
+        toolbar.title = getString(R.string.title_activity_target_wifi_list)
         setSupportActionBar(toolbar)
-        toolbar.title = "target wifi mac"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 

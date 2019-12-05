@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">findwifi</string>
-    <string name="title_activity_target_wifi_list">TargetWifiListActivity</string>
+    <string name="title_activity_target_wifi_list">目标wifi列表</string>
+    <string name="hint_input_mac">输入mac地址</string>
+    <string name="save">保存</string>
+    <string name="title_main_activity">Scan wifi</string>
+    <string name="title_activity_add_target_wifi">Add target wifi</string>
 </resources>
