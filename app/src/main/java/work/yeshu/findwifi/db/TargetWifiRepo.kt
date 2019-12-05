@@ -6,4 +6,8 @@ class TargetWifiRepo(private val targetWifiDao: TargetWifiDao) {
     suspend fun insert(targetWifi: TargetWifi) {
         targetWifiDao.insert(targetWifi)
     }
+
+    suspend fun delete(targetWifi: TargetWifi) {
+        targetWifiDao.delete(targetWifi)
+    }
 }

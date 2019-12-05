@@ -2,6 +2,7 @@ package work.yeshu.findwifi.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -17,4 +18,7 @@ interface TargetWifiDao {
 
     @Query("DELETE FROM target_wifi")
     suspend fun deleteAll()
+
+    @Delete
+    suspend fun delete(targetWifi: TargetWifi)
 }

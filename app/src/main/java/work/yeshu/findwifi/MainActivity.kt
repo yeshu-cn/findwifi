@@ -1,60 +1,48 @@
 package work.yeshu.findwifi
 
 import android.Manifest
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.fab
+import kotlinx.android.synthetic.main.activity_main.recycler_view
 
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION: Int = 1
     private val adapter = WifiAdapter()
+    private lateinit var wifiManager: WifiManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recycler_view.adapter = adapter
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        recycler_view.addItemDecoration(DividerItemDecoration(applicationContext,
+            LinearLayoutManager.VERTICAL))
+        fab.setOnClickListener {
+            val intent = Intent(this@MainActivity, TargetWifiListActivity::class.java)
+            startActivity(intent)
         }
-        loadData()
 
+        wifiManager = application.getSystemService(Context.WIFI_SERVICE) as WifiManager
     }
 
-    private fun loadData() {
+    private fun scanWifi() {
+        wifiManager.startScan()
         recycler_view.postDelayed({
-            loadData()
+            scanWifi()
         }, 2000L)
-        registerPermission()
-    }
-
-    private fun getWifiList(): List<ScanResult>? {
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val scanWifiList = wifiManager.scanResults
-        val wifiList: MutableList<ScanResult> = ArrayList()
-        if (scanWifiList != null && scanWifiList.size > 0) {
-            val signalStrength = HashMap<String, Int?>()
-            for (i in scanWifiList.indices) {
-                val scanResult = scanWifiList[i]
-                if (scanResult.SSID.isNotEmpty()) {
-                    val key = scanResult.SSID + " " + scanResult.capabilities
-                    if (!signalStrength.containsKey(key)) {
-                        signalStrength[key] = i
-                        wifiList.add(scanResult)
-                    }
-                }
-            }
-        }
-        return wifiList
     }
 
     private fun toWifiItem(scanResult: ScanResult): WifiItem {
@@ -71,24 +59,42 @@ class MainActivity : AppCompatActivity() {
                 PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION
             )
         } else {
-            getWifiList()?.let { it ->
-                adapter.data = it.map { toWifiItem(it) }
-                adapter.notifyDataSetChanged()
-            }
+            scanWifi()
         }
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String?>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION) {
-            getWifiList()?.let { it ->
-                adapter.data = it.map { toWifiItem(it) }
-                adapter.notifyDataSetChanged()
-            }
+            scanWifi()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        val filter = IntentFilter()
+        filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        registerReceiver(broadcastReceiver, filter)
+        registerPermission()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(broadcastReceiver)
+    }
+
+    private val broadcastReceiver = ScanResultBroadcastReceiver()
+
+    inner class ScanResultBroadcastReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val scanResults = wifiManager.scanResults
+            Log.d("yeshu", "on Receive data size is ${scanResults.size}")
+            adapter.data = scanResults.map { toWifiItem(it) }
+            adapter.notifyDataSetChanged()
+        }
+    }
+
 
 }
